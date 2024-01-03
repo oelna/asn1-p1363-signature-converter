@@ -1,6 +1,8 @@
 # ASN.1 / P1363 ECDSA Signature Converter
 Convert between ASN.1 and P1363 ECDSA signature formats in Javascript. The functions `p1363_to_asn1()` and `asn1_to_p1363()` take an `arrayBuffer` as input and return an `arrayBuffer`, so you may need to convert your data before and after, eg. from Hex or Base64 encoding. 
 
+**I would love to get feedback on this, especially if it works for you, since I only tested a few samples.**
+
 ```javascript
 import { p1363_to_asn1, asn1_to_p1363 } from './asn1-p1363.js';
 
