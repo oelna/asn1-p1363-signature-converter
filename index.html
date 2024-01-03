@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Convert ASN.1 and P1363 ECDSA signatures</title>
+</head>
+<body>
+
+	<div>
+		<h1>Convert between ASN.1 and P1363 signature formats</h1>
+		<p>Enter a Base64-encoded signature string in either field and it will convert to the other format. No guarantees!</p>
+
+		<textarea id="p1363" cols="30" rows="10" placeholder="Base64-encoded P1363 signature string"></textarea>
+
+		<textarea id="asn1" cols="30" rows="10" placeholder="Base64-encoded ASN.1 signature string"></textarea>
+
+		<br /><button>Convert</button>
+	</div>
+	
+	<script type="module">
+		import { p1363_to_asn1, asn1_to_p1363 } from './asn1-p1363.js';
+
+		document.querySelector('button').addEventListener('click', convert);
+
+		function convert (event) {
+			event.preventDefault();
+
+			const p1363 = document.querySelector('#p1363');
+			const asn1 = document.querySelector('#asn1');
+
+			if (p1363.value == '') {
+				p1363.value = ab2b64(asn1_to_p1363(b642ab(asn1.value)));
+			} else {
+				asn1.value = ab2b64(p1363_to_asn1(b642ab(p1363.value)));
+			}
+		}
+
+		function ab2b64 (arrayBuffer) {
+			return window.btoa(String.fromCharCode.apply(null, new Uint8Array(arrayBuffer)));
+		}
+
+		function b642ab (base64String) {
+			return Uint8Array.from(atob(base64String), c => c.charCodeAt(0)).buffer;
+		}
+	</script>
+</body>
+</html>
